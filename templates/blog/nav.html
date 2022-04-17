@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>荏苒的个人博客</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/blog.css">
+    <link rel="stylesheet" href="/static/sweetalert2/sweetalert2.min.css">
+
+</head>
+<body style="background: #f0f2f3;">
+<header class="bg-dark">
+    <div class="m-auto" style=":::wqmax-width: 1100px">
+        <nav class="navbar navbar-expand-lg navbar-dark ml-auto">
+            <h1 class="navbar-brand font-weight-bold">syang.asia</h1>
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#myNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="myNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a href="{% url 'index' %}" class="nav-link">主页</a></li>
+                    <li class="nav-item"><a href="{% url 'practice' %}" class="nav-link">练字分享</a></li>
+                    <li class="nav-item pr-3"><a href="{% url 'study' %}" class="nav-link">关于学习</a></li>
+                    <li class="nav-item">
+                        {% if request.session.username %}
+                            <div class="d-flex">
+                                <div class="align-self-center mr-1">
+                                    <img src="/media/{{ request.session.user_image }}" style="width: 2rem;border-radius: 0.2rem" alt="">
+                                </div>
+                                <div class="dropdown">
+                                    <a href="javascript:" class="nav-link dropdown-toggle" id="touch"
+                                       data-toggle="dropdown">{{ request.session.username }}</a>
+                                    <div class="dropdown-menu">
+                                        <form action="{% url 'user_images' %}" method="post"
+                                              class="d-flex flex-column justify-content-around pl-4 pr-4"
+                                              enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <input type="file" name="userImage" class="form-control-file pb-2">
+                                            <input type="submit" value="上传头像" class="btn btn-primary">
+                                        </form>
+                                        <p style="font-size: 12px" class="text-center mb-1">建议上传长宽1:1的头像</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <a href="{% url 'login' %}" class="nav-link"> 还未登录哦~ </a>
+                        {% endif %}
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+{% block content %}
+    {% block left %}
+
+    {% endblock %}
+{% endblock %}
+<script src="/static/js/jQuery.js"></script>
+<script src="/static/js/bootstrap.bundle.min.js"></script>
+<script src="/static/sweetalert2/sweetalert2.all.min.js"></script>
+<script src="/static/js/blog.js"></script>
+</body>
+</html>

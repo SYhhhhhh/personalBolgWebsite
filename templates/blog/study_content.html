@@ -1,0 +1,253 @@
+{% extends 'blog/nav.html' %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" href="/static/css/code.css">
+    <link rel="stylesheet" href="{% static 'mdeditor/css/editormd.css' %}">
+    <link rel="stylesheet" href="{% static 'mdeditor/css/editormd.preview.css' %}">
+    <link rel="stylesheet" href="{% static 'mdeditor/css/editormd.logo.css' %}">
+    <div class="container mt-4" style="max-width: 1000px">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-12 bg-white p-4 mt-2" style="border-radius: 4px">
+                        <div class="d-flex align-content-center">
+                            <div class="pr-3">
+                                <img class="shadow" src="/static/images/blog/touxiang.jpg" alt="" width="60px"
+                                     style="border-radius: 30px">
+                            </div>
+                            <div class="d-flex flex-column align-self-center">
+                                <span class="">荏苒</span>
+                                <span class="">{{ article.created_time }}</span>
+                            </div>
+                        </div>
+                        <hr>
+                        <span class="border-bottom pb-2">{{ article.introduce }}</span>
+                        <p>{{ article.content|safe }}</p>
+                        <div class="form-group row">
+                            <div class="col-10">
+                                <input type="text" class="form-control bg-light border-0" placeholder="说点什么吧..."
+                                       id="comment">
+                            </div>
+                            <div class="col-2">
+                                <button class="btn-sm btn-primary form-control align-self-center text-nowrap" id="send">
+                                    发送
+                                </button>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row flex-column" id="comment_con">
+                                {% for comment in comments %}
+                                    <div class="col-md-12 border-top pt-2 pb-2">
+                                        <div class="d-flex">
+                                            <div class="align-self-center">
+                                                <img src="/media/{{ comment.user_image }}"
+                                                     style="width: 2.5rem;border-radius: 5rem">
+                                            </div>
+                                            <div class="d-flex flex-column align-self-center pl-2"
+                                                 style="font-size: 18px">
+                                                <span>{{ comment.username }} :</span>
+                                            </div>
+                                        </div>
+                                        <div class="pl-5">{{ comment.comment }}</div>
+                                        <span class="pl-5 d-flex justify-content-between">
+                                            <span class="d-flex">
+                                                <span class="d-flex approve">
+                                                    <svg t="1643956436237" class="icon align-self-center zan1"
+                                                         style="cursor: pointer;" viewBox="0 0 1024 1024" version="1.1"
+                                                         xmlns="http://www.w3.org/2000/svg" p-id="2044" width="20"
+                                                         height="24"><path
+                                                            d="M857.28 344.992h-264.832c12.576-44.256 18.944-83.584 18.944-118.208 0-78.56-71.808-153.792-140.544-143.808-60.608 8.8-89.536 59.904-89.536 125.536v59.296c0 76.064-58.208 140.928-132.224 148.064l-117.728-0.192A67.36 67.36 0 0 0 64 483.04V872c0 37.216 30.144 67.36 67.36 67.36h652.192a102.72 102.72 0 0 0 100.928-83.584l73.728-388.96a102.72 102.72 0 0 0-100.928-121.824zM128 872V483.04c0-1.856 1.504-3.36 3.36-3.36H208v395.68H131.36A3.36 3.36 0 0 1 128 872z m767.328-417.088l-73.728 388.96a38.72 38.72 0 0 1-38.048 31.488H272V476.864a213.312 213.312 0 0 0 173.312-209.088V208.512c0-37.568 12.064-58.912 34.72-62.176 27.04-3.936 67.36 38.336 67.36 80.48 0 37.312-9.504 84-28.864 139.712a32 32 0 0 0 30.24 42.496h308.512a38.72 38.72 0 0 1 38.048 45.888z"
+                                                            p-id="2045" fill="#bfbfbf"></path></svg>
+                                                    <svg t="1643956908490" class="icon align-self-center zan2"
+                                                         style="cursor:pointer;display: none;"
+                                                         viewBox="0 0 1024 1024"
+                                                         version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4342"
+                                                         width="19" height="20"><path
+                                                            d="M64 483.04V872c0 37.216 30.144 67.36 67.36 67.36H192V416.32l-60.64-0.64A67.36 67.36 0 0 0 64 483.04zM857.28 344.992l-267.808 1.696c12.576-44.256 18.944-83.584 18.944-118.208 0-78.56-68.832-155.488-137.568-145.504-60.608 8.8-67.264 61.184-67.264 126.816v59.264c0 76.064-63.84 140.864-137.856 148L256 416.96v522.4h527.552a102.72 102.72 0 0 0 100.928-83.584l73.728-388.96a102.72 102.72 0 0 0-100.928-121.824z"
+                                                            p-id="4343" fill="#eb2e99"></path></svg>
+                                                    <span class="align-self-center"
+                                                          style="color: #bfbfbf;">{{ comment.agree }}</span>
+                                                </span>
+                                                <span class="ml-5 ">
+                                                    <svg t="1643957714152" class="icon cai1" style="cursor: pointer"
+                                                         viewBox="0 0 1024 1024"
+                                                         version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5670"
+                                                         width="26" height="26"><path
+                                                            d="M320 672.096H256a96 96 0 0 1-96-96v-288a96 96 0 0 1 96-96h402.176a160 160 0 0 1 158.144 135.68l35.968 233.728a96 96 0 0 1-94.88 110.592h-107.072c1.472 6.08 2.816 12.096 4.064 18.016l3.488 17.344c22.08 119.04-1.184 188.544-81.728 188.544-48.64 0-69.952-25.504-87.744-80.96l-12.256-40.416a311.264 311.264 0 0 0-12.288-32.8 195.968 195.968 0 0 0-11.136-21.44l-3.84-6.016c-15.776-23.328-35.52-36.736-60.608-41.504l-4.608-0.736-63.68-0.032z m338.176-416H384L384 608.064l1.984 0.032 4.096 0.256c50.08 6.464 89.92 33.44 117.44 78.944 5.44 9.024 10.336 18.432 14.784 28.384 4.096 9.184 7.744 18.56 11.296 28.864l4.8 14.72 9.056 30.144 3.616 11.52c8.576 25.92 13.792 31.072 25.088 31.072 21.28 0 31.68-23.168 24.16-81.216l-2.048-14.016a593.504 593.504 0 0 0-4.32-23.424l-3.744-17.28a920.96 920.96 0 0 0-2.112-9.12 64 64 0 0 1 62.24-78.848h107.072a32 32 0 0 0 31.616-36.864l-35.968-233.728a96 96 0 0 0-94.88-81.408zM320 608.064L319.968 256.096H256a32 32 0 0 0-32 32v288a32 32 0 0 0 32 32l64-0.032z"
+                                                            p-id="5671" fill="#bfbfbf"></path></svg>
+                                                    <svg t="1643958021672" class="icon cai2"
+                                                         style="cursor: pointer;display: none;"
+                                                         viewBox="0 0 1024 1024"
+                                                         version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6374"
+                                                         width="20" height="26"><path
+                                                            d="M611.188364 651.962182h226.56a93.090909 93.090909 0 0 0 91.834181-108.334546l-61.905454-372.689454A93.090909 93.090909 0 0 0 775.889455 93.090909H372.968727v558.871273c82.152727 81.338182 72.866909 210.571636 88.832 242.338909 15.941818 31.767273 47.616 36.119273 55.621818 36.608 39.703273 0 179.665455-32.395636 93.789091-278.946909zM313.832727 651.636364V93.090909H202.891636a93.090909 93.090909 0 0 0-92.997818 88.901818l-16.709818 372.363637A93.090909 93.090909 0 0 0 186.181818 651.636364h127.650909z"
+                                                            p-id="6375" fill="#eb3499"></path></svg>
+                                                </span>
+                                            </span>
+                                            <span class="text-secondary">{{ comment.created_time }}</span>
+                                            <span style="display: none" class="comment_id">{{ comment.id }}</span>
+                                        </span>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 d-none d-md-block introduce">
+                {% if request.session.username %}
+                    <div class="card">
+                        <div class="card-img-top" style="height: 1rem; background: linear-gradient(to right,
+#7f7fd5, #86a8e7, #91eae4);"></div>
+                        <div class="card-body text-center">
+                            <span class="h5 card-title font-weight-bold">你好哇!</span>
+                            <span class="h5 card-text font-weight-bold">{{ request.session.username }}</span>
+                            <div class="mt-2"><a href="{% url 'logout' %}"
+                                                 class="btn btn-block btn-sm btn-primary text-light">退出登录</a>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <a class="btn btn-secondary btn-block mb-3" href="{% url 'login' %}">点击登录</a>
+                {% endif %}
+                <div class="card">
+                    <img class="card-img-top" src="/static/images/blog/tou.jpg" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold border-bottom pb-3">我是“荏苒”</h5>
+                        <p class="card-text text-secondary">这是一个大学生的个人博客，喜欢编程、练字，并且热爱生活</p>
+                    </div>
+                    <div class="card-footer">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item bg-light">QQ: 2480901422</li>
+                            <li class="list-group-item bg-light">Email: 2480901422@qq.com</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/jQuery.js"></script>
+    <script src="{% static 'mdeditor/js/editormd.js' %}"></script>
+    <script>
+        $(function () {
+                {# 点赞 #}
+                $(".zan1").click(function () {
+                    $(this).hide();
+                    $(this).siblings("svg").show();
+                    let n = $(this).siblings("span").html();
+                    let comment_id = $(this).parent().parent().siblings(".comment_id").html();
+                    n = Number(n) + 1;
+                    $(this).siblings("span").html(n);
+                    $.ajaxSetup({
+                        data: {
+                            csrfmiddlewaretoken: '{{ csrf_token }}',
+                        }
+                    });
+                    $.ajax({
+                        type: 'POST',
+                        url: '{% url 'study_content' %}',
+                        data: {
+                            'action': 'approve',
+                            'num': n,
+                            'comment_id': comment_id,
+                        },
+                    });
+                });
+                $(".zan2").click(function () {
+                    $(this).hide();
+                    $(this).siblings("svg").show();
+                    let n = $(this).siblings("span").html();
+                    let comment_id = $(this).parent().parent().siblings(".comment_id").html();
+                    n = Number(n) - 1;
+                    $(this).siblings("span").html(n);
+                    $.ajaxSetup({
+                        data: {
+                            csrfmiddlewaretoken: '{{ csrf_token }}',
+                        }
+                    });
+                    $.ajax({
+                        type: 'POST',
+                        url: '{% url 'study_content' %}',
+                        data: {
+                            'action': 'approve',
+                            'num': n,
+                            'comment_id': comment_id,
+                        },
+                    });
+                });
+                {# 踩 #}
+                $(".cai1").click(function () {
+                    $(this).hide();
+                    $(this).siblings().show();
+                    let n = $(this).parent().siblings(".approve").children("span").html();
+                    let comment_id = $(this).parent().parent().siblings(".comment_id").html();
+                    n = Number(n) - 1;
+                    if (n > 0) {
+                        $.ajaxSetup({
+                            data: {
+                                csrfmiddlewaretoken: '{{ csrf_token }}',
+                            }
+                        });
+                        $.ajax({
+                            type: 'POST',
+                            url: '{% url 'study_content' %}',
+                            data: {
+                                'action': 'approve',
+                                'num': n,
+                                'comment_id': comment_id,
+                            },
+                        });
+                    }
+                });
+                $(".cai2").click(function () {
+                    $(this).hide();
+                    $(this).siblings().show();
+                    let n = $(this).parent().siblings(".approve").children("span").html();
+                    let comment_id = $(this).parent().parent().siblings(".comment_id").html();
+                    if (n > 0) {
+                        $.ajaxSetup({
+                            data: {
+                                csrfmiddlewaretoken: '{{ csrf_token }}',
+                            }
+                        });
+                        $.ajax({
+                            type: 'POST',
+                            url: '{% url 'study_content' %}',
+                            data: {
+                                'action': 'approve',
+                                'num': n,
+                                'comment_id': comment_id,
+                            },
+                        });
+                    }
+                });
+                {# 发表评论 #}
+                $("#send").click(function () {
+                    let comment = $("#comment").val();
+                    if (comment !== "") {
+                        $.ajaxSetup({
+                            data: {
+                                csrfmiddlewaretoken: '{{ csrf_token }}',
+                            }
+                        });
+                        $.ajax({
+                            type: 'POST',
+                            url: '{% url 'study_content' %}',
+                            data: {
+                                'action': 'comment',
+                                'comment': comment,
+                                'article_id': {{ article.id }}
+                            },
+                            success: function () {
+                                window.location.reload();
+                            }
+                        })
+                    }
+                })
+            }
+        )
+        ;
+    </script>
+
+{% endblock %}

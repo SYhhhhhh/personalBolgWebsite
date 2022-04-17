@@ -1,0 +1,61 @@
+{% extends 'blog/nav.html' %}
+{% block content %}
+    <div class="container mt-4" style="max-width: 1000px">
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    {% for article in articles %}
+                        <div class="col-md-12 bg-white p-4 mt-2" style="border-radius: 4px">
+                            <div class="d-flex align-content-center">
+                                <div class="pr-3">
+                                    <img class="shadow" src="/static/images/blog/touxiang.jpg" alt="" width="60px"
+                                         style="border-radius: 30px">
+                                </div>
+                                <div class="d-flex flex-column align-self-center">
+                                    <span class="">荏苒</span>
+                                    <span class="">{{ article.created_time }}</span>
+                                </div>
+                            </div>
+                            <hr>
+                            <p>{{ article.text }}</p>
+                            <img src="/media/{{ article.image }}" alt="" class="w-100 mb-1">
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="col-md-4 d-none d-md-block introduce">
+                {% if request.session.username %}
+                    <div class="card">
+                        <div class="card-img-top" style="height: 1rem; background: linear-gradient(to right,
+#7f7fd5, #86a8e7, #91eae4);"></div>
+                        <div class="card-body text-center">
+                            <span class="h5 card-title font-weight-bold">你好哇!</span>
+                            <span class="h5 card-text font-weight-bold">{{ request.session.username }}</span>
+                            <div class="mt-2"><a href="/login/logout/"
+                                                 class="btn btn-block btn-sm btn-primary text-light">退出登录</a>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <a class="btn btn-secondary btn-block mb-3" href="/login/">点击登录</a>
+                {% endif %}
+                <div class="card">
+                    <img class="card-img-top" src="/static/images/blog/tou.jpg" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title font-weight-bold border-bottom pb-3">我是“荏苒”</h5>
+                        <p class="card-text text-secondary">这是一个大学生的个人博客，喜欢编程、练字，并且热爱生活</p>
+                    </div>
+                    <div class="card-footer">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item bg-light">QQ: 2480901422</li>
+                            <li class="list-group-item bg-light">Email: 2480901422@qq.com</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,13 @@
+.bg-white {
+    background-color: #ffffff;
+}
+
+.text-word {
+    color: #d0d2d4;
+}
+.hover {
+    transition: box-shadow .5s linear;
+}
+.hover:hover {
+  box-shadow: 0.3rem 0.3rem 1rem rgba(0, 0, 0, 0.1) !important;
+}
